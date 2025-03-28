@@ -1,36 +1,79 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Sakofi Bank
 
-## Getting Started
+Bienvenue dans **Sakofi Bank**, une plateforme bancaire moderne et intuitive construite avec des technologies de pointe pour offrir une expérience utilisateur fluide et sécurisée.
 
-First, run the development server:
+## 📚 Description du projet
+Sakofi Bank est une application bancaire en ligne conçue avec **React 19**, **Vite**, **Tailwind CSS v4**, **Framer Motion** et d'autres technologies modernes pour offrir une interface rapide, réactive et accessible.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## ⚙️ Technologies utilisées
+- **React 19** - Framework JavaScript moderne pour la construction d'interfaces utilisateur dynamiques.
+- **Vite** - Outil de build ultra-rapide pour React.
+- **Tailwind CSS v4** - Framework CSS utilitaire pour un design responsive et optimisé, sans fichier de configuration.
+- **Framer Motion** - Librairie d'animations fluide pour une meilleure expérience utilisateur.
+- **TypeScript** - Typage statique pour un code plus robuste.
+- **Prisma** - ORM pour gérer la base de données.
+- **Mysql** - Base de données relationnelle performante.
+
+## ⚡ Fonctionnalités principales
+- Authentification sécurisée (OAuth, JWT, 2FA)
+- Gestion de comptes bancaires et transactions
+- Tableau de bord interactif avec visualisation des données
+- Centre de notifications en temps réel
+- Espace utilisateur personnalisé
+- Interface réactive et adaptée à tous les appareils
+- Navigation fluide et animations optimisées
+- Pages dédiées pour chaque élément du tableau de bord
+- Autres fonctionnalités clés typiques d'un dashboard bancaire moderne
+
+## 📝 Installation et exécution
+
+### Prérequis
+- **Node.js** >= 18
+- **pnpm** ou **npm**
+- **Base de données PostgreSQL**
+
+### Installation
+```sh
+# Cloner le référentiel
+git clone https://github.com/Gedeon-luzolo/sacofi_bank.git
+cd sakofi-bank
+
+# Installer les dépendances
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Configuration
+Créez un fichier `.env.local` et ajoutez les variables nécessaires :
+```ini
+DATABASE_URL=postgresql://user:password@localhost:5432/sakofi_bank
+AUTH_SECRET=your_secret_key
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Démarrer le projet
+```sh
+pnpm run dev
+```
+L'application sera disponible sur **http://localhost:5173**.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 💪 Contribution
+Les contributions sont les bienvenues ! Pour contribuer :
+1. Forker le repo
+2. Créer une branche (`git checkout -b feature/ma-feature`)
+3. Committer (`git commit -m "Ajout de ma fonctionnalité"`)
+4. Pousser (`git push origin feature/ma-feature`)
+5. Ouvrir une Pull Request
 
-## Learn More
+## 🌐 Déploiement
+L'application peut être déployée sur **Vercel** ou **Netlify** avec la configuration `vite.config.ts` déjà préparée.
 
-To learn more about Next.js, take a look at the following resources:
+```sh
+pnpm run build
+pnpm preview
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 👥 Auteurs
+- **Votre Nom** - [GitHub](https://github.com/Gedeon-luzolo/)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## ✅ Licence
+Ce projet est sous licence **MIT** - voir le fichier [LICENSE](LICENSE) pour plus de détails.
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
