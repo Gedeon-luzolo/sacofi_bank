@@ -6,8 +6,7 @@ Bienvenue dans **Sakofi Bank**, une plateforme bancaire moderne et intuitive con
 Sakofi Bank est une application bancaire en ligne conçue avec **React 19**, **Vite**, **Tailwind CSS v4**, **Framer Motion** et d'autres technologies modernes pour offrir une interface rapide, réactive et accessible.
 
 ## ⚙️ Technologies utilisées
-- **React 19** - Framework JavaScript moderne pour la construction d'interfaces utilisateur dynamiques.
-- **Vite** - Outil de build ultra-rapide pour React.
+- **React 19 & Next js 15** - Framework JavaScript moderne pour la construction d'interfaces utilisateur dynamiques.
 - **Tailwind CSS v4** - Framework CSS utilitaire pour un design responsive et optimisé, sans fichier de configuration.
 - **Framer Motion** - Librairie d'animations fluide pour une meilleure expérience utilisateur.
 - **TypeScript** - Typage statique pour un code plus robuste.
