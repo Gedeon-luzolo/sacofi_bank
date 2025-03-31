@@ -7,6 +7,7 @@ export function FactureElement() {
     <div>
       <PageMeta title="Facture" description="Gestion des factures" />
       <PageBreadcrumb pageTitle="Gestion des factures " />
+
       <FactureComponents />
     </div>
   );

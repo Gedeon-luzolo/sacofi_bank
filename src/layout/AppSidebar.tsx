@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router";
 
 // Assume these icons are imported from an icon library
 import { GridIcon } from "../icons";
-import { Home, Settings } from "lucide-react";
+import { Home, KeySquare, Settings } from "lucide-react";
 import { useSidebar } from "../context/SidebarContext";
 import { FileText } from "lucide-react";
 
@@ -15,6 +15,11 @@ type NavItem = {
 };
 
 const navItems: NavItem[] = [
+  {
+    icon: <KeySquare />,
+    name: "Admin",
+    path: "/admin",
+  },
   {
     icon: <GridIcon />,
     name: "Dashboard",

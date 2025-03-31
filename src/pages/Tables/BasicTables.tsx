@@ -1,7 +1,7 @@
 import PageBreadcrumb from "../../components/common/PageBreadCrumb";
 import ComponentCard from "../../components/common/ComponentCard";
 import PageMeta from "../../components/common/PageMeta";
-import { TableClient } from "../../components/tables/BasicTables/tableClient";
+import { TableClient } from "../../components/tables/tableClient";
 
 export default function BasicTables() {
   return (

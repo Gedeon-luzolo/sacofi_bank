@@ -142,7 +142,11 @@ export function PaymentComponent() {
           </motion.div>
 
           <div className="flex gap-3 mt-6 justify-end lg:justify-start">
-            <button type="button" className="px-4 py-2 bg-gray-300 rounded-lg">
+            <button
+              onClick={() => navigate("/home")}
+              type="button"
+              className="px-4 py-2 bg-gray-300 rounded-lg"
+            >
               Annuler
             </button>
             <motion.button

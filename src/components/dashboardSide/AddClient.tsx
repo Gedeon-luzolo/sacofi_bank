@@ -5,6 +5,8 @@ import Input from "../form/input/InputField";
 import Select from "../form/Select";
 import { toast } from "sonner";
 import { useNavigate } from "react-router";
+import { EnvelopeIcon } from "../../icons";
+import FileInput from "../form/input/FileInput";
 
 export function AddClientForm() {
   const navigate = useNavigate();
@@ -53,20 +55,35 @@ export function AddClientForm() {
             </div>
             <div>
               <Label>Numéro de téléphone</Label>
-              <Input type="text" name="phone" placeholder="Téléphone" />
+              <Input type="number" name="phone" placeholder="Téléphone" />
             </div>
             <div>
               <Label>Email du client</Label>
-              <Input type="email" name="name" placeholder="Email du client" />
+              <div className="relative">
+                <Input
+                  placeholder="info@gmail.com"
+                  type="text"
+                  className="pl-[62px]"
+                />
+                <span className="absolute left-0 top-1/2 -translate-y-1/2 border-r border-gray-200 px-3.5 py-3 text-gray-500 dark:border-gray-800 dark:text-gray-400">
+                  <EnvelopeIcon className="size-6" />
+                </span>
+              </div>
             </div>
             <div>
               <Label>N° du terrain</Label>
               <Input type="text" name="numTerain" placeholder="TRM-02" />
             </div>
+
+            <div>
+              <Label>Photo du client</Label>
+              <FileInput className="custom-class" />
+            </div>
             <div className="flex gap-3 mt-6 justify-end lg:justify-start">
               <button
                 type="button"
                 className="px-4 py-2 bg-gray-300 rounded-lg"
+                onClick={() => navigate("/home")}
               >
                 Annuler
               </button>
@@ -75,7 +92,7 @@ export function AddClientForm() {
                 type="submit"
                 className="px-4 py-2 bg-brand-800 text-white rounded-lg"
               >
-                Ajouter le Client
+                Enregistrer le Client
               </motion.button>
             </div>
           </form>

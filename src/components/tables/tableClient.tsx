@@ -7,8 +7,8 @@ import {
   TableCell,
   TableHeader,
   TableRow,
-} from "../../ui/table";
-import Badge from "../../ui/badge/Badge";
+} from "../ui/table";
+import Badge from "../ui/badge/Badge";
 import { Edit, Trash2, Eye } from "lucide-react";
 import { motion } from "framer-motion";
 interface ClientData {
