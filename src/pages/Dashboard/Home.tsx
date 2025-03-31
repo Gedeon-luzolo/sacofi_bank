@@ -19,7 +19,7 @@ export default function Home() {
               transition={{ type: "spring", stiffness: 300 }}
             >
               <DashboardCard
-                title="Ajoutez un client"
+                title="Donnez un client"
                 icon={<UserPlus className="size-8 lg:size-10 text-zinc-50" />}
                 href="/client"
                 className="bg-blue-500 text-add-client-foreground text-zinc-50 hover:bg-blue-600 transition-colors"

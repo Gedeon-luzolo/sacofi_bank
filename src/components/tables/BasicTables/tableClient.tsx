@@ -71,7 +71,7 @@ const initialClients: ClientData[] = [
   },
 ];
 
-export default function BasicTableOne() {
+export function TableClient() {
   const [clients, setClients] = useState<ClientData[]>(initialClients);
 
   const handleDelete = (id: number) => {
@@ -86,7 +86,7 @@ export default function BasicTableOne() {
       className="overflow-hidden rounded-xl border border-green-500 bg-white dark:border-green-800 dark:bg-white/[0.03] shadow-md"
     >
       <div className="w-full overflow-x-auto">
-        <Table className="min-w-[600px]">
+        <Table className="min-w-[600px] ">
           <TableHeader className="border-b border-green-500  bg-green-700 dark:border-green-800 dark:bg-green-800">
             <TableRow>
               <TableCell
@@ -141,7 +141,7 @@ export default function BasicTableOne() {
             </TableRow>
           </TableHeader>
 
-          <TableBody className="divide-y divide-green-700">
+          <TableBody className="divide-y divide-green-700 ">
             {clients.map((client) => (
               <TableRow
                 key={client.id}
