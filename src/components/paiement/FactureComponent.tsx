@@ -106,57 +106,6 @@ export function FactureComponents() {
           </table>
         </div>
       </ComponentCard>
-
-      {/* <Modal isOpen={isOpen} onClose={closeModal} className="max-w-[700px] m-4">
-        <div className="relative w-full p-4 overflow-y-auto bg-white rounded-3xl dark:bg-gray-900 lg:p-11">
-          <div className="px-2 pr-14">
-            <h4 className="mb-5 text-2xl font-semibold text-gray-800 dark:text-white/90">
-              Créer une facture
-            </h4>
-          </div>
-          <form className="flex flex-col">
-            <div className="px-2 overflow-y-auto">
-              <div className="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2">
-                <div>
-                  <Label>Client</Label>
-                  <Input
-                    type="text"
-                    name="client"
-                    placeholder="Nom du client"
-                  />
-                </div>
-                <div>
-                  <Label>Montant</Label>
-                  <Input
-                    type="number"
-                    name="amount"
-                    placeholder="Montant en $"
-                  />
-                </div>
-                <div>
-                  <Label>Date</Label>
-                  <Input type="date" name="date" />
-                </div>
-                <div>
-                  <Label>Statut</Label>
-                  <Select
-                    options={statusOptions}
-                    onChange={() => console.log("")}
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="flex items-center gap-3 px-2 mt-6 lg:justify-end">
-              <Button size="sm" variant="outline" onClick={closeModal}>
-                Fermer
-              </Button>
-              <Button size="sm" onClick={handleSave}>
-                Enregistrer
-              </Button>
-            </div>
-          </form>
-        </div>
-      </Modal> */}
     </motion.div>
   );
 }
