@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router";
 
 // Assume these icons are imported from an icon library
 import { GridIcon } from "../icons";
-import { Settings } from "lucide-react";
+import { Home, KeySquare, Settings } from "lucide-react";
 import { useSidebar } from "../context/SidebarContext";
 import { FileText } from "lucide-react";
 
@@ -15,6 +15,11 @@ type NavItem = {
 };
 
 const navItems: NavItem[] = [
+  {
+    icon: <KeySquare />,
+    name: "Admin",
+    path: "/admin",
+  },
   {
     icon: <GridIcon />,
     name: "Dashboard",
@@ -96,28 +101,17 @@ const AppSidebar: React.FC = () => {
         <Link to="/home">
           {isExpanded || isHovered || isMobileOpen ? (
             <>
-              <img
-                className="dark:hidden"
-                src="/images/logo/sacofi_bgBlanc.png"
-                alt="Logo"
-                width={200}
-                height={60}
-              />
-              <img
-                className="hidden dark:block"
-                src="/images/logo/auth-logo.png"
-                alt="Logo"
-                width={200}
-                height={60}
-              />
+              <div className="flex justify-center items-center gap-x-3">
+                <span>
+                  <Home className="text-brand-500" />
+                </span>
+                <h1 className="dark:text-gray-400 text-lg">Acceuil</h1>
+              </div>
             </>
           ) : (
-            <img
-              src="/images/logo/logo-icon.png"
-              alt="Logo"
-              width={40}
-              height={40}
-            />
+            <span>
+              <Home className="text-brand-500" />
+            </span>
           )}
         </Link>
       </div>

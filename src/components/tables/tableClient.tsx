@@ -7,8 +7,8 @@ import {
   TableCell,
   TableHeader,
   TableRow,
-} from "../../ui/table";
-import Badge from "../../ui/badge/Badge";
+} from "../ui/table";
+import Badge from "../ui/badge/Badge";
 import { Edit, Trash2, Eye } from "lucide-react";
 import { motion } from "framer-motion";
 interface ClientData {
@@ -27,7 +27,7 @@ const initialClients: ClientData[] = [
   {
     id: 1,
     user: {
-      image: "/images/user/user-1.jpg",
+      image: "/images/user/default.png",
       name: "Jean Dupont",
       phone: "+33 6 12 34 56 78",
     },
@@ -42,7 +42,7 @@ const initialClients: ClientData[] = [
   {
     id: 2,
     user: {
-      image: "/images/user/user-2.jpg",
+      image: "/images/user/default.png",
       name: "Marie Curie",
       phone: "+33 7 98 76 54 32",
     },
@@ -50,14 +50,14 @@ const initialClients: ClientData[] = [
     transactionType: "Location",
     propertyType: "Appartement",
     date: "2024-02-20",
-    landImage: "/images/land/land-2.jpg",
+    landImage: "/images/land/default.png",
     price: "1.2K€/mois",
     status: "En cours",
   },
   {
     id: 3,
     user: {
-      image: "/images/user/user-3.jpg",
+      image: "/images/user/default.png",
       name: "Paul Martin",
       phone: "+33 6 45 67 89 01",
     },
@@ -65,13 +65,13 @@ const initialClients: ClientData[] = [
     transactionType: "Achat",
     propertyType: "Maison",
     date: "2024-01-10",
-    landImage: "/images/land/land-3.jpg",
+    landImage: "/images/user/default.png",
     price: "180K€",
     status: "Annulé",
   },
 ];
 
-export default function BasicTableOne() {
+export function TableClient() {
   const [clients, setClients] = useState<ClientData[]>(initialClients);
 
   const handleDelete = (id: number) => {
@@ -86,7 +86,7 @@ export default function BasicTableOne() {
       className="overflow-hidden rounded-xl border border-green-500 bg-white dark:border-green-800 dark:bg-white/[0.03] shadow-md"
     >
       <div className="w-full overflow-x-auto">
-        <Table className="min-w-[600px]">
+        <Table className="min-w-[600px] ">
           <TableHeader className="border-b border-green-500  bg-green-700 dark:border-green-800 dark:bg-green-800">
             <TableRow>
               <TableCell
@@ -104,19 +104,13 @@ export default function BasicTableOne() {
 
               <TableCell
                 isHeader
-                className="hidden md:table-cell px-5 py-3 text-start font-semibold text-white/90"
-              >
-                Adresse
-              </TableCell>
-              <TableCell
-                isHeader
-                className="hidden lg:table-cell px-5 py-3 text-start font-semibold text-white/90"
+                className="  px-5 py-3 text-center font-semibold text-white/90"
               >
                 Transaction
               </TableCell>
               <TableCell
                 isHeader
-                className="hidden lg:table-cell px-5 py-3 text-start font-semibold text-white/90"
+                className=" px-5 py-3 text-start font-semibold text-white/90"
               >
                 Type de Bien
               </TableCell>
@@ -141,7 +135,7 @@ export default function BasicTableOne() {
             </TableRow>
           </TableHeader>
 
-          <TableBody className="divide-y divide-green-700">
+          <TableBody className="divide-y divide-green-700 ">
             {clients.map((client) => (
               <TableRow
                 key={client.id}
@@ -161,25 +155,19 @@ export default function BasicTableOne() {
                       <span className="block font-semibold text-gray-900 dark:text-white/90">
                         {client.user.name}
                       </span>
-                      {/* <span className="block text-gray-600 dark:text-gray-400 text-sm">
-                        
-                      </span> */}
                     </div>
                   </div>
                 </TableCell>
 
-                <TableCell className="hidden md:table-cell px-4 py-3 text-start text-gray-600 dark:text-gray-400">
+                <TableCell className=" px-4 py-3 text-start text-gray-600 dark:text-gray-400">
                   {client.user.phone}
                 </TableCell>
-                <TableCell className="hidden md:table-cell px-4 py-3 text-start text-gray-600 dark:text-gray-400">
-                  {client.address}
-                </TableCell>
 
-                <TableCell className="hidden lg:table-cell px-4 py-3 text-start text-gray-600 dark:text-gray-400">
+                <TableCell className=" px-4 py-3 text-start text-gray-600 dark:text-gray-400">
                   {client.transactionType}
                 </TableCell>
 
-                <TableCell className="hidden lg:table-cell px-4 py-3 text-start text-gray-600 dark:text-gray-400">
+                <TableCell className=" px-4 py-3 text-start text-gray-600 dark:text-gray-400">
                   {client.propertyType}
                 </TableCell>
 
@@ -202,7 +190,7 @@ export default function BasicTableOne() {
                   {client.price}
                 </TableCell>
 
-                <TableCell className="px-4 py-12 text-center flex justify-center gap-3">
+                <TableCell className="px-4 py-6 text-center flex justify-center gap-3">
                   <button className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300">
                     <Eye size={20} />
                   </button>

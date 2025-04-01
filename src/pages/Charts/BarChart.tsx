@@ -1,18 +1,18 @@
 import PageBreadcrumb from "../../components/common/PageBreadCrumb";
-import ComponentCard from "../../components/common/ComponentCard";
 import BarChartOne from "../../components/charts/bar/BarChartOne";
 import PageMeta from "../../components/common/PageMeta";
+import { motion } from "framer-motion";
 
 export default function BarChart() {
   return (
-    <div>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
       <PageMeta title="Sacofi Rapport" description="Sacofi Rapport" />
-      <PageBreadcrumb pageTitle="Bar Chart" />
-      <div className="space-y-6">
-        <ComponentCard title="Bar Chart 1">
-          <BarChartOne />
-        </ComponentCard>
-      </div>
-    </div>
+      <PageBreadcrumb pageTitle="Rapport" />
+      <BarChartOne />
+    </motion.div>
   );
 }

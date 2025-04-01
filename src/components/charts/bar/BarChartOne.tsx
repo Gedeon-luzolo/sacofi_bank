@@ -1,5 +1,6 @@
 import Chart from "react-apexcharts";
 import { ApexOptions } from "apexcharts";
+import ComponentCard from "../../common/ComponentCard";
 
 export default function BarChartOne() {
   const options: ApexOptions = {
@@ -88,10 +89,12 @@ export default function BarChartOne() {
     },
   ];
   return (
+    <ComponentCard title="Rapport Annuel">
     <div className="max-w-full overflow-x-auto custom-scrollbar">
-      <div id="chartOne" className="min-w-[1000px]">
-        <Chart options={options} series={series} type="bar" height={180} />
+      <div id="chartOne" className="min-w-[80%]">
+        <Chart options={options} series={series} type="bar" height={250} />
       </div>
     </div>
+    </ComponentCard>
   );
 }

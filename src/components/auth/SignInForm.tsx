@@ -5,6 +5,7 @@ import Label from "../form/Label";
 import Input from "../form/input/InputField";
 import Checkbox from "../form/input/Checkbox";
 import Button from "../ui/button/Button";
+import { toast } from "sonner";
 
 export default function SignInForm() {
   const navigate = useNavigate();
@@ -77,7 +78,11 @@ export default function SignInForm() {
                   </Link>
                 </div>
                 <div>
-                  <Button className="w-full" size="sm">
+                  <Button
+                    className="w-full"
+                    size="sm"
+                    onClick={() => toast.success("Connecté avec succès")}
+                  >
                     Se connecter
                   </Button>
                 </div>
