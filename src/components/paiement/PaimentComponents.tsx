@@ -5,12 +5,26 @@ import Input from "../form/input/InputField";
 import Select from "../form/Select.tsx";
 import { toast } from "sonner";
 import { useNavigate } from "react-router";
+import { useMutation } from "@tanstack/react-query";
+import { PaymentApi } from "../../api/PaymentApi"; // Assurez-vous que le chemin est correct
 
 export function PaymentComponent() {
   const navigate = useNavigate();
-  const handleSubmit = () => {
-    toast.success("Paiement ajouté avec succés");
-    navigate("/facture");
+
+  // Mutation pour ajouter un client
+  const mutation = useMutation({
+    mutationFn: (paymentData: FormData) => PaymentApi.addPayment(paymentData),
+    onSuccess: () => {
+      toast.success("Paiement ajouté avec succès");
+      navigate("/facture");
+    },
+    onError: () => {
+      toast.error("Erreur lors de l'ajout du paiement");
+    },
+  });
+
+  const handleSubmit = (formData: FormData) => {
+    mutation.mutate(formData); // Envoie les données du formulaire
   };
 
   const paymentMethods = [
@@ -52,7 +66,7 @@ export function PaymentComponent() {
             transition={{ delay: 0.2 }}
           >
             <Label>Nom du Client</Label>
-            <Input type="text" placeholder="Jean Dupont" />
+            <Input name="clientName" type="text" placeholder="Jean Dupont" />
           </motion.div>
 
           <motion.div
@@ -62,6 +76,7 @@ export function PaymentComponent() {
           >
             <Label>Motif de Paiement</Label>
             <Select
+              name="paymentReason" // Ajout du nom pour le formulaire
               options={paymentMethods}
               placeholder="Choisissez un motif"
               onChange={() => console.log("bpnjour")}
@@ -75,11 +90,17 @@ export function PaymentComponent() {
           >
             <div className="col-span-2">
               <Label>Montant</Label>
-              <Input type="number" placeholder="Ex: 1200" className="pl-4" />
+              <Input
+                name="amount"
+                type="number"
+                placeholder="Ex: 1200"
+                className="pl-4"
+              />
             </div>
             <div>
               <Label>Devise</Label>
               <Select
+                name="currency" // Ajout du nom pour le formulaire
                 options={paymentDevice}
                 placeholder="USD"
                 onChange={() => console.log("bpnjour")}
@@ -94,6 +115,7 @@ export function PaymentComponent() {
           >
             <Label>Mode de paiement</Label>
             <Select
+              name="paymentMode" // Ajout du nom pour le formulaire
               options={paymentMode}
               placeholder="Choisissez un mode de paiement"
               onChange={() => console.log("bpnjour")}
@@ -107,6 +129,7 @@ export function PaymentComponent() {
           >
             <Label>Site (concession)</Label>
             <Select
+              name="site" // Ajout du nom pour le formulaire
               options={paymentConcession}
               placeholder="Sélectionnez la concession"
               onChange={() => console.log("bpnjour")}
@@ -120,7 +143,7 @@ export function PaymentComponent() {
           >
             <Label>N° du terrain</Label>
             <div className="relative">
-              <Input type="text" placeholder="TRM-02" />
+              <Input name="terrainNumber" type="text" placeholder="TRM-02" />
             </div>
           </motion.div>
 
@@ -129,8 +152,12 @@ export function PaymentComponent() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.8 }}
           >
-            <Label>Mumero du client</Label>
-            <Input type="text" placeholder="Entrez le numero du client" />
+            <Label>N° du client</Label>
+            <Input
+              name="clientNumber"
+              type="text"
+              placeholder="Entrez le numéro du client"
+            />
           </motion.div>
           <motion.div
             initial={{ opacity: 0 }}
@@ -138,7 +165,7 @@ export function PaymentComponent() {
             transition={{ delay: 0.8 }}
           >
             <Label>E-mail du client</Label>
-            <Input type="email" placeholder="luzolo@admin.com" />
+            <Input name="email" type="email" placeholder="luzolo@admin.com" />
           </motion.div>
 
           <div className="flex gap-3 mt-6 justify-end lg:justify-start">

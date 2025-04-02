@@ -1,5 +1,3 @@
-"use client";
-
 import { motion } from "framer-motion";
 import ComponentCard from "../common/ComponentCard";
 import Input from "../form/input/InputField";
@@ -7,36 +5,38 @@ import { DownloadIcon } from "../../icons";
 import { Search, LucidePrinter, LucideEye } from "lucide-react";
 import Button from "../ui/button/Button";
 import { useNavigate } from "react-router";
-
-const invoices = [
-  {
-    id: "INV001",
-    client: "Jean Dupont",
-    email: "luz@gmail.com",
-    amount: 25000,
-    motif: "rachat",
-    numTerrain: "MK-802",
-    modePaiement: "en espece",
-    concession: "MALUKU",
-    numClient: "+243 85 784 58",
-    date: "2025-03-15",
-  },
-  {
-    id: "INV002",
-    client: "Marir jean",
-    email: "marie@gmail.com",
-    numClient: "+243 85 784 58",
-    amount: 25000,
-    motif: "renouvellement",
-    numTerrain: "MTP-80",
-    modePaiement: "MOBILE MONEY",
-    concession: "GOMBE",
-    date: "2025-04-15",
-  },
-];
+import { useQuery } from "@tanstack/react-query";
+import { PaymentApi } from "../../api/PaymentApi";
+import { IPayment } from "../../../types/globalTypes";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHeader,
+  TableRow,
+} from "../ui/table";
+import SkeletonLoader from "../Loading/SkekeletonLoader";
 
 export function FactureComponents() {
   const navigate = useNavigate();
+
+  const { data, isError, isLoading } = useQuery({
+    queryKey: ["payment"],
+    queryFn: PaymentApi.getPayments,
+  });
+
+  if (isError) {
+    return <div>Erreur</div>;
+  }
+
+  if (isLoading) {
+    return (
+      <div>
+        {" "}
+        <SkeletonLoader rows={8} columns={6} />
+      </div>
+    );
+  }
 
   return (
     <motion.div
@@ -58,52 +58,135 @@ export function FactureComponents() {
           </Button>
         </div>
 
-        <div className="mt-6 mx-auto overflow-auto rounded-lg border border-green-700 dark:border-green-800">
-          <table className="w-full text-left">
-            <thead className=" bg-green-700 dark:bg-green-700/40 text-gray-200">
-              <tr>
-                <th className="p-4">N° Facture</th>
-                <th className="p-4">Nom du Client</th>
-                <th className="p-4">Motif de paiment</th>
-                <th className="p-4">Montant</th>
-                <th className="p-4">Mode depaiement</th>
-                <th className="p-4">Concession</th>
-                <th className="p-4">N° du terran</th>
-                <th className="p-4">N° du client</th>
-                <th className="p-4">Email du client</th>
-                <th className="p-4 text-right">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {invoices.map((invoice) => (
-                <tr
-                  key={invoice.id}
-                  className="border-t border-green-700 dark:text-gray-100"
+        <div className="mt-6 mx-auto overflow-x-auto rounded-lg border border-green-700 dark:border-green-800">
+          <Table className="min-w-[600px]">
+            <TableHeader className="border-b border-green-500 bg-green-700 dark:border-green-800 dark:bg-green-800">
+              <TableRow>
+                <TableCell
+                  isHeader
+                  className="px-2 py-3 text-start font-semibold text-white/90"
                 >
-                  <td className="p-4 font-medium">{invoice.id}</td>
-                  <td className="p-4">{invoice.client}</td>
-                  <td className="p-4">{invoice.motif}</td>
-                  <td className="p-4">{invoice.amount}</td>
-                  <td className="p-4">{invoice.modePaiement}</td>
-                  <td className="p-4">{invoice.concession}</td>
-                  <td className="p-4">{invoice.numTerrain}</td>
-                  <td>{invoice.numClient}</td>
-                  <td className="p-4">{invoice.email}</td>
-                  <td className="p-4 text-right flex justify-end gap-2">
-                    <button className="p-2  rounded hover:bg-green-600">
-                      <LucideEye className="size-5" />
-                    </button>
-                    <button className="p-2  rounded hover:bg-green-600">
-                      <DownloadIcon className="size-5" />
-                    </button>
-                    <button className="p-2  rounded hover:bg-green-600">
-                      <LucidePrinter className="size-5" />
-                    </button>
+                  N° Facture
+                </TableCell>
+                <TableCell
+                  isHeader
+                  className="px-5 py-3 text-start font-semibold text-white/90"
+                >
+                  Nom du Client
+                </TableCell>
+                <TableCell
+                  isHeader
+                  className="px-5 py-3 text-start font-semibold text-white/90"
+                >
+                  Motif de paiement
+                </TableCell>
+                <TableCell
+                  isHeader
+                  className="px-5 py-3 text-start font-semibold text-white/90"
+                >
+                  Montant
+                </TableCell>
+                <TableCell
+                  isHeader
+                  className="px-5 py-3 text-center font-semibold text-white/90"
+                >
+                  Mode de paiement
+                </TableCell>
+                <TableCell
+                  isHeader
+                  className="px-5 py-3 text-start font-semibold text-white/90"
+                >
+                  Concession
+                </TableCell>
+                <TableCell
+                  isHeader
+                  className="px-5 py-3 text-start font-semibold text-white/90"
+                >
+                  N° du terrain
+                </TableCell>
+                <TableCell
+                  isHeader
+                  className="px-5 py-3 text-center font-semibold text-white/90"
+                >
+                  N° du client
+                </TableCell>
+                <TableCell
+                  isHeader
+                  className="px-5 py-3 text-center font-semibold text-white/90"
+                >
+                  Email du client
+                </TableCell>
+                <TableCell
+                  isHeader
+                  className="px-5 py-3 text-center font-semibold text-white/90"
+                >
+                  Actions
+                </TableCell>
+              </TableRow>
+            </TableHeader>
+
+            <TableBody className="divide-y divide-green-700">
+              {data && data.length > 0 ? (
+                data.map((invoice: IPayment) => (
+                  <TableRow
+                    key={invoice.id}
+                    className="hover:bg-brand-700/10 transition"
+                  >
+                    <TableCell className="px-4 py-3 text-start text-gray-600 dark:text-gray-400">
+                      {invoice.id}
+                    </TableCell>
+                    <TableCell className="px-5 py-4 text-start">
+                      <span className="block font-semibold text-gray-900 dark:text-white/90">
+                        {invoice.clientName}
+                      </span>
+                    </TableCell>
+                    <TableCell className="px-4 py-3 text-start text-gray-600 dark:text-gray-400">
+                      {invoice.paymentReason}
+                    </TableCell>
+                    <TableCell className="px-4 py-3 text-start text-gray-600 dark:text-gray-400">
+                      {invoice.amount}
+                    </TableCell>
+                    <TableCell className="px-4 py-3 text-center text-gray-600 dark:text-gray-400">
+                      {invoice.paymentMode} USD
+                    </TableCell>
+                    <TableCell className="px-4 py-3 text-start text-gray-600 dark:text-gray-400">
+                      {invoice.site}
+                    </TableCell>
+                    <TableCell className="px-4 py-3 text-start text-gray-600 dark:text-gray-400">
+                      {invoice.terrainNumber}
+                    </TableCell>
+                    <TableCell className="px-4 py-3 text-start text-gray-600 dark:text-gray-400">
+                      {invoice.clientNumber}
+                    </TableCell>
+                    <TableCell className="px-4 py-3 text-start text-gray-600 dark:text-gray-400">
+                      {invoice.email}
+                    </TableCell>
+
+                    <TableCell className="px-4 py-6 text-center flex justify-center gap-3">
+                      <button className="p-2 rounded hover:bg-green-600">
+                        <LucideEye className="size-5" />
+                      </button>
+                      <button className="p-2 rounded hover:bg-green-600">
+                        <DownloadIcon className="size-5" />
+                      </button>
+                      <button className="p-2 rounded hover:bg-green-600">
+                        <LucidePrinter className="size-5" />
+                      </button>
+                    </TableCell>
+                  </TableRow>
+                ))
+              ) : (
+                <tr>
+                  <td
+                    colSpan={10}
+                    className="p-4 text-center dark:text-gray-200"
+                  >
+                    Aucune facture trouvée.
                   </td>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              )}
+            </TableBody>
+          </Table>
         </div>
       </ComponentCard>
     </motion.div>

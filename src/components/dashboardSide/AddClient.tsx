@@ -7,17 +7,32 @@ import { toast } from "sonner";
 import { useNavigate } from "react-router";
 import { EnvelopeIcon } from "../../icons";
 import FileInput from "../form/input/FileInput";
+import { useMutation } from "@tanstack/react-query";
+import { ClientApi } from "../../api/ClientApi";
 
 export function AddClientForm() {
   const navigate = useNavigate();
-  const paymentStatus = [
-    { value: "pending", label: "En attente" },
-    { value: "confirmed", label: "Confirmé" },
-    { value: "failed", label: "Échoué" },
+  const concession = [
+    { value: "MALUKU", label: "MALUKU" },
+    { value: "MAKALA", label: "MAKALA" },
+    { value: "LEMBA", label: "LEMBA" },
   ];
-  const handleSubmit = () => {
-    toast.success("Utilisateur ajouté avec succés");
-    navigate("/basic-tables");
+
+  // Mutation pour ajouter un client
+  const mutation = useMutation({
+    mutationFn: (clientData: FormData) => ClientApi.postClient(clientData),
+    onSuccess: () => {
+      toast.success("Client ajouté avec succès");
+      navigate("/basic-tables");
+    },
+    onError: () => {
+      toast.error("Erreur lors de l'ajout du client");
+    },
+  });
+
+  const handleSubmit = (formData: FormData) => {
+    console.log("Données envoyées :", Object.fromEntries(formData.entries())); // Vérifier les données envoyées
+    mutation.mutate(formData); // Envoie les données du formulaire
   };
 
   return (
@@ -34,7 +49,7 @@ export function AddClientForm() {
         <div className="mt-6">
           <form
             className="grid grid-cols-1 gap-6 lg:grid-cols-2"
-            action={handleSubmit}
+            action={handleSubmit} // Utilisation de onSubmit
           >
             <div>
               <Label>Nom complet du Client</Label>
@@ -44,25 +59,31 @@ export function AddClientForm() {
             <div>
               <Label>Site (concession)</Label>
               <Select
-                options={paymentStatus}
+                name="site"
+                options={concession}
                 placeholder="Sélectionnez un site ou concession"
                 onChange={() => console.log("bpnjour")}
               />
             </div>
             <div>
               <Label>Dimension du terrain</Label>
-              <Input type="text" name="phone" placeholder="20/25 mètres" />
+              <Input
+                type="text"
+                name="terrainDimension"
+                placeholder="20/25 mètres"
+              />
             </div>
             <div>
               <Label>Numéro de téléphone</Label>
-              <Input type="number" name="phone" placeholder="Téléphone" />
+              <Input type="text" name="phone" placeholder="Téléphone" />
             </div>
             <div>
               <Label>Email du client</Label>
               <div className="relative">
                 <Input
                   placeholder="info@gmail.com"
-                  type="text"
+                  type="email"
+                  name="email" // Ajout du nom pour le formulaire
                   className="pl-[62px]"
                 />
                 <span className="absolute left-0 top-1/2 -translate-y-1/2 border-r border-gray-200 px-3.5 py-3 text-gray-500 dark:border-gray-800 dark:text-gray-400">
@@ -72,12 +93,12 @@ export function AddClientForm() {
             </div>
             <div>
               <Label>N° du terrain</Label>
-              <Input type="text" name="numTerain" placeholder="TRM-02" />
+              <Input type="text" name="numTerrain" placeholder="TRM-02" />
             </div>
 
             <div>
               <Label>Photo du client</Label>
-              <FileInput className="custom-class" />
+              <FileInput className="custom-class" name="photo" />
             </div>
             <div className="flex gap-3 mt-6 justify-end lg:justify-start">
               <button
