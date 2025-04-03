@@ -72,67 +72,67 @@ export function FactureComponents() {
           </Button>
         </div>
 
-        <div className="mt-6 mx-auto overflow-x-auto rounded-lg border border-green-700 dark:border-green-800">
+        <div className="mt-6 mx-auto overflow-x-auto custom-scrollbar rounded-lg border border-green-700 dark:border-green-800">
           <Table className="min-w-[600px]">
             <TableHeader className="border-b border-green-500 bg-green-700 dark:border-green-800 dark:bg-green-800">
               <TableRow>
                 <TableCell
                   isHeader
-                  className="px-2 py-3 text-start font-semibold text-white/90"
+                  className="px-2 py-3 text-sm text-start font-semibold text-white/90"
                 >
                   N° Facture
                 </TableCell>
                 <TableCell
                   isHeader
-                  className="px-5 py-3 text-start font-semibold text-white/90"
+                  className="px-3 py-3 text-sm text-start font-semibold text-white/90"
                 >
                   Nom du Client
                 </TableCell>
                 <TableCell
                   isHeader
-                  className="px-5 py-3 text-start font-semibold text-white/90"
+                  className="px-3 py-3 text-sm text-start font-semibold text-white/90"
                 >
                   Motif de paiement
                 </TableCell>
                 <TableCell
                   isHeader
-                  className="px-5 py-3 text-start font-semibold text-white/90"
+                  className="px-3 py-3 text-sm text-start font-semibold text-white/90"
                 >
                   Montant
                 </TableCell>
                 <TableCell
                   isHeader
-                  className="px-5 py-3 text-center font-semibold text-white/90"
+                  className="px-3 py-3 text-sm text-center font-semibold text-white/90"
                 >
                   Mode de paiement
                 </TableCell>
                 <TableCell
                   isHeader
-                  className="px-5 py-3 text-start font-semibold text-white/90"
+                  className="px-3 py-3 text-sm text-start font-semibold text-white/90"
                 >
                   Concession
                 </TableCell>
                 <TableCell
                   isHeader
-                  className="px-5 py-3 text-start font-semibold text-white/90"
+                  className="px-5 py-3 text-sm text-start font-semibold text-white/90"
                 >
                   N° du terrain
                 </TableCell>
                 <TableCell
                   isHeader
-                  className="px-5 py-3 text-center font-semibold text-white/90"
+                  className="px-3 py-3 text-sm text-center font-semibold text-white/90"
                 >
                   N° du client
                 </TableCell>
                 <TableCell
                   isHeader
-                  className="px-5 py-3 text-center font-semibold text-white/90"
+                  className="px-3 py-2 text-sm text-center font-semibold text-white/90"
                 >
-                  Email du client
+                  Email client
                 </TableCell>
                 <TableCell
                   isHeader
-                  className="px-5 py-3 text-center font-semibold text-white/90"
+                  className="px-3 py-2 text-sm text-center font-semibold text-white/90"
                 >
                   Actions
                 </TableCell>
@@ -144,44 +144,44 @@ export function FactureComponents() {
                 data.map((invoice: IPayment) => (
                   <TableRow
                     key={invoice.id}
-                    className="hover:bg-brand-700/10 transition"
+                    className="hover:bg-brand-700/10 transition text-sm"
                   >
-                    <TableCell className="px-4 py-3 text-start text-gray-600 dark:text-gray-400">
+                    <TableCell className="text-sm px-4 py-3 text-start text-gray-600 dark:text-gray-400">
                       {invoice.id}
                     </TableCell>
-                    <TableCell className="px-5 py-4 text-start">
-                      <span className="block font-semibold text-gray-900 dark:text-white/90">
+                    <TableCell className="px-3 py-4 text-start">
+                      <span className="block text-sm font-semibold text-gray-900 dark:text-white/90">
                         {invoice.clientName}
                       </span>
                     </TableCell>
-                    <TableCell className="px-4 py-3 text-start text-gray-600 dark:text-gray-400">
+                    <TableCell className="px-3 text-sm py-3 text-start text-gray-600 dark:text-gray-400">
                       {invoice.paymentReason}
                     </TableCell>
-                    <TableCell className="px-4 py-3 text-start text-gray-600 dark:text-gray-400">
+                    <TableCell className="px-3 text-sm py-3 text-start text-gray-600 dark:text-gray-400">
                       {invoice.amount} {invoice.currency}
                     </TableCell>
-                    <TableCell className="px-4 py-3 text-center text-gray-600 dark:text-gray-400">
+                    <TableCell className="px-3 text-sm py-3 text-center text-gray-600 dark:text-gray-400">
                       {invoice.paymentMode}
                     </TableCell>
-                    <TableCell className="px-4 py-3 text-start text-gray-600 dark:text-gray-400">
+                    <TableCell className="px-4 py-3 text-sm text-start text-gray-600 dark:text-gray-400">
                       {invoice.site}
                     </TableCell>
-                    <TableCell className="px-4 py-3 text-start text-gray-600 dark:text-gray-400">
+                    <TableCell className="px-4 py-3 text-sm text-start text-gray-600 dark:text-gray-400">
                       {invoice.terrainNumber}
                     </TableCell>
-                    <TableCell className="px-4 py-3 text-start text-gray-600 dark:text-gray-400">
+                    <TableCell className="px-4 py-3 text-sm text-start text-gray-600 dark:text-gray-400">
                       {invoice.clientNumber}
                     </TableCell>
-                    <TableCell className="px-4 py-3 text-start text-gray-600 dark:text-gray-400">
+                    <TableCell className="px-4 py-3 text-sm text-start text-gray-600 dark:text-gray-400">
                       {invoice.email}
                     </TableCell>
 
-                    <TableCell className="px-4 py-6 text-center  gap-3">
+                    <TableCell className="px-4 py-3 text-sm text-center  gap-3">
                       <button
                         className="p-2 rounded hover:bg-green-600"
                         onClick={() => openModal(invoice)}
                       >
-                        <LucidePrinter className="size-5" />
+                        <LucidePrinter className="size-5 dark:text-gray-200" />
                       </button>
                     </TableCell>
                   </TableRow>

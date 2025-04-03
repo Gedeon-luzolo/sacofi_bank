@@ -7,7 +7,7 @@ interface FactureModalProps {
 
 export function FactureModal({ selectedInvoice }: FactureModalProps) {
   return (
-    <div className="no-scrollbar relative w-full max-w-[700px] overflow-hidden rounded-3xl bg-white p-4 dark:bg-gray-900">
+    <div className="no-scrollbar relative w-full max-w-[700px] overflow-hidden rounded-3xl bg-white p-4">
       <div className="custom-scrollbar max-h-[80vh] overflow-y-auto px-4 pb-4">
         <div className="flex justify-between items-start mb-4">
           <div className="flex items-center py-10">
