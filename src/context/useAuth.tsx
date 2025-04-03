@@ -87,11 +87,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const register = async (userData: FormData) => {
     try {
-      const data = await AuthApi.register(userData);
-      setUser(data.user);
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user));
-      localStorage.setItem("tokenTimestamp", Date.now().toString());
+      await AuthApi.register(userData);
       toast.success("Utilisateur créé avec succès");
     } catch (error) {
       console.error("Register error:", error);

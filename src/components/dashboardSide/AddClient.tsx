@@ -31,8 +31,8 @@ export function AddClientForm() {
   });
 
   const handleSubmit = (formData: FormData) => {
-    console.log("Données envoyées :", Object.fromEntries(formData.entries())); // Vérifier les données envoyées
-    mutation.mutate(formData); // Envoie les données du formulaire
+    // console.log("Données envoyées :", Object.fromEntries(formData.entries()));
+    mutation.mutate(formData);
   };
 
   return (
@@ -75,7 +75,7 @@ export function AddClientForm() {
             </div>
             <div>
               <Label>Numéro de téléphone</Label>
-              <Input type="text" name="phone" placeholder="Téléphone" />
+              <Input type="number" name="phone" placeholder="Téléphone" />
             </div>
             <div>
               <Label>Email du client</Label>

@@ -32,7 +32,7 @@ export function FormAddAgent({ closeModal }: IClose) {
         </h4>
       </div>
       <form className="flex flex-col" action={handleSubmit}>
-        <div className="custom-scrollbar h-[400px] lg:h-[200px] overflow-y-scroll px-2 pb-3">
+        <div className="custom-scrollbar h-[400px] lg:h-[250px] overflow-y-scroll px-6 pb-3">
           <div className="mt-7">
             <div className="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-3">
               <div className="col-span-2 lg:col-span-1">

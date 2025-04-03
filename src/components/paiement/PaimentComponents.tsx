@@ -11,7 +11,6 @@ import { PaymentApi } from "../../api/PaymentApi"; // Assurez-vous que le chemin
 export function PaymentComponent() {
   const navigate = useNavigate();
 
-  // Mutation pour ajouter un client
   const mutation = useMutation({
     mutationFn: (paymentData: FormData) => PaymentApi.addPayment(paymentData),
     onSuccess: () => {
@@ -31,7 +30,8 @@ export function PaymentComponent() {
     { value: "souscription", label: "SOUSCRIPTION" },
     { value: "paiement menseul", label: "PAIEMENT MENSUEL" },
     { value: "borne", label: "BORNE" },
-    { value: "plan-construction", label: "PLAN & CONSTRUCTION" },
+    { value: "plan", label: "PLAN" },
+    { value: "construction", label: "CONSTRUCTION" },
   ];
   const paymentConcession = [
     { value: "Maluku", label: "MALUKU" },
@@ -92,7 +92,7 @@ export function PaymentComponent() {
               <Label>Montant</Label>
               <Input
                 name="amount"
-                type="number"
+                type="text"
                 placeholder="Ex: 1200"
                 className="pl-4"
               />
@@ -152,10 +152,10 @@ export function PaymentComponent() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.8 }}
           >
-            <Label>N° du client</Label>
+            <Label>Contact du client</Label>
             <Input
               name="clientNumber"
-              type="text"
+              type="number"
               placeholder="Entrez le numéro du client"
             />
           </motion.div>
@@ -165,7 +165,7 @@ export function PaymentComponent() {
             transition={{ delay: 0.8 }}
           >
             <Label>E-mail du client</Label>
-            <Input name="email" type="email" placeholder="luzolo@admin.com" />
+            <Input name="email" type="email" placeholder="client@sacofi.com" />
           </motion.div>
 
           <div className="flex gap-3 mt-6 justify-end lg:justify-start">

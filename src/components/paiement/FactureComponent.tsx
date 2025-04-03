@@ -122,7 +122,7 @@ export function FactureComponents() {
                   isHeader
                   className="px-3 py-3 text-sm text-center font-semibold text-white/90"
                 >
-                  N° du client
+                  Telephone
                 </TableCell>
                 <TableCell
                   isHeader
@@ -158,7 +158,8 @@ export function FactureComponents() {
                       {invoice.paymentReason}
                     </TableCell>
                     <TableCell className="px-3 text-sm py-3 text-start text-gray-600 dark:text-gray-400">
-                      {invoice.amount} {invoice.currency}
+                      {invoice.amount.toLocaleString("en-US")}{" "}
+                      {invoice.currency}
                     </TableCell>
                     <TableCell className="px-3 text-sm py-3 text-center text-gray-600 dark:text-gray-400">
                       {invoice.paymentMode}

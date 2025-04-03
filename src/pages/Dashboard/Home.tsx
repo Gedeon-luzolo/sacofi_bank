@@ -4,7 +4,26 @@ import { DashboardCard } from "../../components/dashboardSide/dashboard-card";
 import { StatCard } from "../../components/dashboardSide/stat-card";
 import { FileBarChart, UserPlus, Receipt, Users } from "lucide-react";
 import { motion } from "framer-motion";
+import { useQuery } from "@tanstack/react-query";
+import { ClientApi } from "../../api/ClientApi";
+import { PaymentApi } from "../../api/PaymentApi";
+
 export default function Home() {
+  const { data: client = [] } = useQuery({
+    queryKey: ["paiement"],
+    queryFn: ClientApi.getClients,
+  });
+
+  const { data: reson } = useQuery({
+    queryKey: ["cont"],
+    queryFn: PaymentApi.countPaymentByReason,
+  });
+
+  const { data: construction } = useQuery({
+    queryKey: ["construct"],
+    queryFn: PaymentApi.paymentConstruction,
+  });
+
   return (
     <>
       <PageMeta
@@ -68,17 +87,17 @@ export default function Home() {
           <div className="grid grid-cols-3 gap-2 lg:gap-6">
             <StatCard
               title="Nombre des clients"
-              value="8"
+              value={client?.length}
               className="bg-indigo-950 text-stat-clients-foreground text-zinc-50"
             />
             <StatCard
               title="Nombre des parcelles vendues"
-              value="21"
+              value={reson?.data.count}
               className="bg-yellow-700 text-stat-parcels-foreground text-zinc-50"
             />
             <StatCard
               title="Nombre des chantiers"
-              value="15"
+              value={construction?.data.count}
               className="bg-green-400 text-stat-projects-foreground text-zinc-50"
             />
           </div>

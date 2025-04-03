@@ -13,6 +13,34 @@ export const PaymentApi = {
     return response.data;
   },
 
+  // Compter les paiements par paymentReason
+  countPaymentByReason: async () => {
+    try {
+      const response = await api.get(`/payment/cont/reson`);
+      return response;
+    } catch (error) {
+      console.log("Erreur lors du comptage", error);
+    }
+  },
+
+  paymentConstruction: async () => {
+    try {
+      const response = await api.get(`/payment/cont/construction`);
+      return response;
+    } catch (error) {
+      console.log("Erreur lors du comptage", error);
+    }
+  },
+
+  getTotal: async () => {
+    try {
+      const response = await api.get(`/payment/total`);
+      return response.data;
+    } catch (error) {
+      console.log("Erreur lors du comptage", error);
+    }
+  },
+
   // // Récupérer un paiement par ID
   // getPaymentById: async (id: number) => {
   //   const response = await api.get(`/payment/${id}`);
@@ -30,5 +58,4 @@ export const PaymentApi = {
   //   await api.delete(`/payments/${id}`);
   //   return id;
   // },
-
 };
