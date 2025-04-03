@@ -1,8 +1,7 @@
 import { motion } from "framer-motion";
 import ComponentCard from "../common/ComponentCard";
 import Input from "../form/input/InputField";
-import { DownloadIcon } from "../../icons";
-import { Search, LucidePrinter, LucideEye } from "lucide-react";
+import { Search, LucidePrinter } from "lucide-react";
 import Button from "../ui/button/Button";
 import { useNavigate } from "react-router";
 import { useQuery } from "@tanstack/react-query";
@@ -15,15 +14,30 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
-import SkeletonLoader from "../Loading/SkekeletonLoader";
+import { useState } from "react";
+import { Modal } from "../ui/modal";
+import { FactureModal } from "./FactureModal";
+import LoadingSpinner from "../Loading/LoadingSpinner";
 
 export function FactureComponents() {
   const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedInvoice, setSelectedInvoice] = useState<IPayment | null>(null);
 
   const { data, isError, isLoading } = useQuery({
     queryKey: ["payment"],
     queryFn: PaymentApi.getPayments,
   });
+
+  const openModal = (invoice: IPayment) => {
+    setSelectedInvoice(invoice);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedInvoice(null);
+  };
 
   if (isError) {
     return <div>Erreur</div>;
@@ -33,7 +47,7 @@ export function FactureComponents() {
     return (
       <div>
         {" "}
-        <SkeletonLoader rows={8} columns={6} />
+        <LoadingSpinner />
       </div>
     );
   }
@@ -144,10 +158,10 @@ export function FactureComponents() {
                       {invoice.paymentReason}
                     </TableCell>
                     <TableCell className="px-4 py-3 text-start text-gray-600 dark:text-gray-400">
-                      {invoice.amount}
+                      {invoice.amount} {invoice.currency}
                     </TableCell>
                     <TableCell className="px-4 py-3 text-center text-gray-600 dark:text-gray-400">
-                      {invoice.paymentMode} USD
+                      {invoice.paymentMode}
                     </TableCell>
                     <TableCell className="px-4 py-3 text-start text-gray-600 dark:text-gray-400">
                       {invoice.site}
@@ -162,14 +176,11 @@ export function FactureComponents() {
                       {invoice.email}
                     </TableCell>
 
-                    <TableCell className="px-4 py-6 text-center flex justify-center gap-3">
-                      <button className="p-2 rounded hover:bg-green-600">
-                        <LucideEye className="size-5" />
-                      </button>
-                      <button className="p-2 rounded hover:bg-green-600">
-                        <DownloadIcon className="size-5" />
-                      </button>
-                      <button className="p-2 rounded hover:bg-green-600">
+                    <TableCell className="px-4 py-6 text-center  gap-3">
+                      <button
+                        className="p-2 rounded hover:bg-green-600"
+                        onClick={() => openModal(invoice)}
+                      >
                         <LucidePrinter className="size-5" />
                       </button>
                     </TableCell>
@@ -188,6 +199,15 @@ export function FactureComponents() {
             </TableBody>
           </Table>
         </div>
+        <Modal
+          isOpen={isModalOpen}
+          onClose={closeModal}
+          className="max-w-[700px] m-4"
+        >
+          {selectedInvoice && (
+            <FactureModal selectedInvoice={selectedInvoice} />
+          )}
+        </Modal>
       </ComponentCard>
     </motion.div>
   );

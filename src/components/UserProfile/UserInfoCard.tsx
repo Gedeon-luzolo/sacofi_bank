@@ -3,9 +3,13 @@ import { Modal } from "../ui/modal";
 import Button from "../ui/button/Button";
 import Input from "../form/input/InputField";
 import Label from "../form/Label";
+import { useAuth } from "../../context/useAuth";
 
 export default function UserInfoCard() {
   const { isOpen, openModal, closeModal } = useModal();
+  const { user } = useAuth();
+  console.log(user);
+
   const handleSave = () => {
     // Handle save logic here
     console.log("Saving changes...");
@@ -25,7 +29,7 @@ export default function UserInfoCard() {
                 Nom
               </p>
               <p className="text-sm font-medium text-gray-800 dark:text-white/90">
-                Gedeon
+                {user?.name}
               </p>
             </div>
 
@@ -34,7 +38,7 @@ export default function UserInfoCard() {
                 Prenom
               </p>
               <p className="text-sm font-medium text-gray-800 dark:text-white/90">
-                Admin
+                {user?.name}
               </p>
             </div>
 
@@ -43,7 +47,7 @@ export default function UserInfoCard() {
                 Email
               </p>
               <p className="text-sm font-medium text-gray-800 dark:text-white/90">
-                admin@gmail.com
+                {user?.email}
               </p>
             </div>
 
@@ -61,7 +65,7 @@ export default function UserInfoCard() {
                 Titre
               </p>
               <p className="text-sm font-medium text-gray-800 dark:text-white/90">
-                Ingenieur Data
+                {user?.titre}
               </p>
             </div>
           </div>
@@ -130,10 +134,10 @@ export default function UserInfoCard() {
             </div>
             <div className="flex items-center gap-3 px-2 mt-6 lg:justify-end">
               <Button size="sm" variant="outline" onClick={closeModal}>
-                Close
+                Fermer
               </Button>
               <Button size="sm" onClick={handleSave}>
-                Save Changes
+                Enregistrer le changement
               </Button>
             </div>
           </form>

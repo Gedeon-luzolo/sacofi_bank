@@ -1,10 +1,9 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router";
+import { ProtectedRoute } from "./components/auth/ProtectedRoute";
+import { AdminRoute } from "./components/auth/AdminRoute";
 import SignIn from "./pages/AuthPages/SignIn";
 import NotFound from "./pages/OtherPage/NotFound";
 import UserProfiles from "./pages/UserProfiles";
-import Badges from "./pages/UiElements/Badges";
-import Avatars from "./pages/UiElements/Avatars";
-import Buttons from "./pages/UiElements/Buttons";
 import BarChart from "./pages/Charts/BarChart";
 import BasicTables from "./pages/Tables/BasicTables";
 import AppLayout from "./layout/AppLayout";
@@ -17,39 +16,42 @@ import Admin from "./pages/Dashboard/Admin";
 
 export default function App() {
   return (
-    <>
-      <Router>
-        <ScrollToTop />
-        <Routes>
-          {/* Dashboard Layout */}
-          <Route element={<AppLayout />}>
-            <Route index path="/home" element={<Home />} />
+    <Router>
+      <ScrollToTop />
+      <Routes>
+        {/* Public route */}
+        <Route path="/" element={<SignIn />} />
 
-            {/* Others Page */}
-            <Route path="/profile" element={<UserProfiles />} />
+        {/* Protected routes */}
+        <Route
+          element={
+            <ProtectedRoute>
+              <AppLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route path="/home" element={<Home />} />
+          <Route path="/profile" element={<UserProfiles />} />
+          <Route path="/basic-tables" element={<BasicTables />} />
+          <Route path="/paiement" element={<Paiement />} />
+          <Route path="/facture" element={<FactureElement />} />
+          <Route path="/client" element={<Client />} />
+          <Route path="/rapport" element={<BarChart />} />
 
-            {/* Tables */}
-            <Route path="/basic-tables" element={<BasicTables />} />
-            <Route path="/paiement" element={<Paiement />} />
-            <Route path="/facture" element={<FactureElement />} />
-            <Route path="/client" element={<Client />} />
-            <Route path="/rapport" element={<BarChart />} />
+          {/* Admin route */}
+          <Route
+            path="/admin"
+            element={
+              <AdminRoute>
+                <Admin />
+              </AdminRoute>
+            }
+          />
+        </Route>
 
-            <Route path="/admin" element={<Admin />} />
-
-            {/* Ui Elements */}
-            <Route path="/avatars" element={<Avatars />} />
-            <Route path="/badge" element={<Badges />} />
-            <Route path="/buttons" element={<Buttons />} />
-          </Route>
-
-          {/* Auth Layout */}
-          <Route path="/" element={<SignIn />} />
-
-          {/* Fallback Route */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Router>
-    </>
+        {/* 404 route */}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </Router>
   );
 }

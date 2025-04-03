@@ -11,6 +11,8 @@ interface DashboardCardProps {
   href: string;
   className?: string;
   iconClassName?: string;
+  description?: string;
+  onClick?: () => void;
 }
 
 export function DashboardCard({
@@ -19,14 +21,17 @@ export function DashboardCard({
   href,
   className,
   iconClassName,
+  description,
+  onClick,
 }: DashboardCardProps) {
   return (
     <Link to={href}>
       <motion.div
+        onClick={onClick}
         whileHover={{ scale: 1.03 }}
         whileTap={{ scale: 0.97 }}
         className={cn(
-          "flex h-30 lg:h-48 flex-col items-center justify-center rounded-lg p-6 text-center shadow-md transition-colors",
+          "flex h-34 lg:h-48 flex-col items-center justify-center rounded-lg p-6 text-center shadow-md transition-colors",
           className
         )}
       >
@@ -38,7 +43,8 @@ export function DashboardCard({
         >
           {icon}
         </div>
-        <h3 className="text-md lg:text-xl font-bold">{title}</h3>
+        <h3 className="text-sm lg:text-xl font-bold">{title}</h3>
+        <h3 className="text-md lg:text-4xl font-bold">{description}</h3>
       </motion.div>
     </Link>
   );

@@ -6,14 +6,25 @@ import Input from "../form/input/InputField";
 import Checkbox from "../form/input/Checkbox";
 import Button from "../ui/button/Button";
 import { toast } from "sonner";
+import { useAuth } from "../../context/useAuth";
 
 export default function SignInForm() {
   const navigate = useNavigate();
+  const { login } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
 
-  const handleSubmit = () => {
-    navigate("/home");
+  const handleSubmit = async (formData: FormData) => {
+    try {
+      const email = formData.get("email") as string;
+      const password = formData.get("password") as string;
+      const success = await login(email, password);
+      if (success) {
+        navigate("/home");
+      }
+    } catch {
+      toast.error("Erreur de connexion");
+    }
   };
 
   return (
@@ -25,7 +36,7 @@ export default function SignInForm() {
               Connectez-vous
             </h1>
             <p className="text-sm text-gray-500 dark:text-gray-400">
-              Saisisez vos informations de connexion
+              Saisissez vos informations de connexion
             </p>
           </div>
           <div>
@@ -40,7 +51,11 @@ export default function SignInForm() {
                   <Label>
                     Email <span className="text-error-500">*</span>{" "}
                   </Label>
-                  <Input placeholder="info@gmail.com" />
+                  <Input
+                    type="email"
+                    placeholder="info@gmail.com"
+                    name="email"
+                  />
                 </div>
                 <div>
                   <Label>
@@ -48,6 +63,7 @@ export default function SignInForm() {
                   </Label>
                   <div className="relative">
                     <Input
+                      name="password"
                       type={showPassword ? "text" : "password"}
                       placeholder="Saisissez votre mot de passe"
                     />
@@ -74,15 +90,11 @@ export default function SignInForm() {
                     to="/reset-password"
                     className="text-sm text-green-500 hover:text-green-600 dark:text-green-400"
                   >
-                    Recuperer mot de passe ?
+                    Récupérer mot de passe ?
                   </Link>
                 </div>
                 <div>
-                  <Button
-                    className="w-full"
-                    size="sm"
-                    onClick={() => toast.success("Connecté avec succès")}
-                  >
+                  <Button className="w-full" size="sm">
                     Se connecter
                   </Button>
                 </div>

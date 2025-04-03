@@ -11,48 +11,60 @@ import Label from "../form/Label";
 import Input from "../form/input/InputField";
 import Button from "../ui/button/Button";
 import { useModal } from "../../hooks/useModal";
-
-interface Order {
-  id: number;
-  image: string;
-  email: string;
-  name: string;
-  role: string;
-  phone: string;
-}
-
-const tableData: Order[] = [
-  {
-    id: 1,
-    image: "/images/user/default.png",
-    name: "Gloire Minde",
-    role: "Caissier",
-    email: "gloire@gmail.com",
-    phone: "+24587852",
-  },
-  {
-    id: 2,
-    image: "/images/user/default.png",
-    name: "Serge Mado",
-    role: "Consultant",
-    email: "gloire@gmail.com",
-    phone: "+24587852",
-  },
-];
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { AgentApi } from "../../api/AgentApi";
+import { toast } from "sonner";
+import { IAgent } from "../../../types/globalTypes";
+import LoadingSpinner from "../Loading/LoadingSpinner";
 
 export function UserTable() {
+  const queryClient = useQueryClient();
   const { isOpen, openModal, closeModal } = useModal();
-  const handleSave = () => {
-    // Handle save logic here
-    console.log("Saving changes...");
-    closeModal();
+
+  const {
+    data: agents = [],
+    isError,
+    isLoading,
+  } = useQuery({
+    queryKey: ["agents"],
+    queryFn: AgentApi.getAgents,
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: (id: number) => AgentApi.deleteAgent(id),
+    onSuccess: () => {
+      toast.success("Agent Supprimé avec succès");
+      queryClient.invalidateQueries({ queryKey: ["agents"] });
+    },
+    onError: () => {
+      toast.error("Erreur lors de la suppression de l'agent");
+    },
+  });
+
+  const handleDelete = (id: number) => {
+    deleteMutation.mutate(id);
   };
+
+  if (isLoading)
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
+  if (isError) return <div>Erreur lors du chargement des agents</div>;
+
   return (
     <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
-      <div className="max-w-full overflow-x-auto">
+      <div className="max-w-full overflow-x-auto custom-scrollbar">
         <Table>
           <TableHeader className="border-b bg-brand-800/70  dark:bg-brand-800/30 border-gray-100 dark:border-white/[0.05]">
             <TableRow>
+              <TableCell
+                isHeader
+                className="px-5 py-3 font-medium text-zinc-100 text-start text-theme-lg dark:text-gray-400"
+              >
+                N°
+              </TableCell>
               <TableCell
                 isHeader
                 className="px-5 py-3 font-medium text-zinc-100 text-start text-theme-lg dark:text-gray-400"
@@ -69,7 +81,13 @@ export function UserTable() {
                 isHeader
                 className="px-5 py-3 font-medium text-zinc-100 text-start text-theme-lg dark:text-gray-400"
               >
-                Titre
+                Poste
+              </TableCell>
+              <TableCell
+                isHeader
+                className="px-5 py-3 font-medium text-zinc-100 text-start text-theme-lg dark:text-gray-400"
+              >
+                Role
               </TableCell>
               <TableCell
                 isHeader
@@ -81,83 +99,95 @@ export function UserTable() {
                 isHeader
                 className="px-5 py-3 font-medium text-zinc-100 text-start text-theme-lg dark:text-gray-400"
               >
-                Email
-              </TableCell>
-              <TableCell
-                isHeader
-                className="px-5 py-3 font-medium text-zinc-100 text-start text-theme-lg dark:text-gray-400"
-              >
                 Actions
               </TableCell>
             </TableRow>
           </TableHeader>
 
-          {/* Table Body */}
           <TableBody className="divide-y divide-gray-100 dark:divide-white/[0.05]">
-            {tableData.map((order) => (
-              <TableRow key={order.id}>
-                <TableCell className="px-5 py-2 sm:px-6 text-start">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 overflow-hidden rounded-full">
-                      <img
-                        width={40}
-                        height={40}
-                        src={order.image}
-                        alt={order.name}
-                      />
-                    </div>
+            {agents && agents.length > 0 ? (
+              agents.map((agent: IAgent) => (
+                <TableRow key={agent.id}>
+                  <TableCell className="px-5 py-2 sm:px-6 text-start">
                     <div>
                       <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
-                        {order.name}
+                        {agent.id}
                       </span>
                     </div>
-                  </div>
-                </TableCell>
-                <TableCell className="px-5 py-2 sm:px-6 text-start">
-                  <div>
-                    <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
-                      {order.email}
-                    </span>
-                  </div>
-                </TableCell>
-                <TableCell className="px-5 py-2 sm:px-6 text-start">
-                  <div>
-                    <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
-                      {order.role}
-                    </span>
-                  </div>
-                </TableCell>
-                <TableCell className="px-5 py-2 sm:px-6 text-start">
-                  <div>
-                    <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
-                      {order.phone}
-                    </span>
-                  </div>
-                </TableCell>
-                <TableCell className="px-5 py-2 sm:px-6 text-start">
-                  <div>
-                    <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
-                      {order.email}
-                    </span>
-                  </div>
-                </TableCell>
-                <TableCell className="px-4 py-5 text-center flex justify-center gap-3">
-                  <button
-                    onClick={openModal}
-                    className="text-yellow-600 hover:text-yellow-700 dark:text-yellow-400 dark:hover:text-yellow-300"
-                  >
-                    <Edit size={20} />
-                  </button>
-                  <button className="text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300">
-                    <Trash2 size={20} />
-                  </button>
-                </TableCell>
-              </TableRow>
-            ))}
+                  </TableCell>
+                  <TableCell className="px-5 py-2 sm:px-6 text-start">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 overflow-hidden rounded-full">
+                        <img
+                          width={40}
+                          height={40}
+                          src="/images/user/default.png"
+                          alt={agent.name}
+                        />
+                      </div>
+                      <div>
+                        <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
+                          {agent.name}
+                        </span>
+                      </div>
+                    </div>
+                  </TableCell>
+                  <TableCell className="px-5 py-2 sm:px-6 text-start">
+                    <div>
+                      <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
+                        {agent.email}
+                      </span>
+                    </div>
+                  </TableCell>
+                  <TableCell className="px-5 py-2 sm:px-6 text-start">
+                    <div>
+                      <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
+                        {agent.titre}
+                      </span>
+                    </div>
+                  </TableCell>
+                  <TableCell className="px-5 py-2 sm:px-6 text-start">
+                    <div>
+                      <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
+                        {agent.role}
+                      </span>
+                    </div>
+                  </TableCell>
+                  <TableCell className="px-5 py-2 sm:px-6 text-start">
+                    <div>
+                      <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
+                        {agent.phone}
+                      </span>
+                    </div>
+                  </TableCell>
+                  <TableCell className="px-4 py-5 text-center flex justify-center gap-3">
+                    <button
+                      onClick={openModal}
+                      className="text-yellow-600 hover:text-yellow-700 dark:text-yellow-400 dark:hover:text-yellow-300"
+                    >
+                      <Edit size={20} />
+                    </button>
+                    <button
+                      onClick={() => handleDelete(agent.id)}
+                      className="text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"
+                    >
+                      <Trash2 size={20} />
+                    </button>
+                  </TableCell>
+                </TableRow>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={7} className="p-4 text-center dark:text-gray-200">
+                  Aucun Agent trouvé
+                </td>
+              </tr>
+            )}
           </TableBody>
         </Table>
       </div>
 
+      {/* Modifier un agent */}
       <Modal isOpen={isOpen} onClose={closeModal} className="max-w-[700px] m-4">
         <div className="no-scrollbar relative w-full max-w-[700px] overflow-y-auto rounded-3xl bg-white p-4 dark:bg-gray-900 lg:p-11">
           <div className="px-2 pr-14">
@@ -200,9 +230,7 @@ export function UserTable() {
               <Button size="sm" variant="outline" onClick={closeModal}>
                 Close
               </Button>
-              <Button size="sm" onClick={handleSave}>
-                Save Changes
-              </Button>
+              <Button size="sm">Save Changes</Button>
             </div>
           </form>
         </div>

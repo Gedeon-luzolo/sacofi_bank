@@ -45,8 +45,8 @@ export function PaymentComponent() {
     { value: "mobile_money", label: "MOBILE MONEY" },
   ];
   const paymentDevice = [
-    { value: "franc", label: "CDF" },
-    { value: "dollars", label: "USD" },
+    { value: "CDF", label: "CDF" },
+    { value: "USD", label: "USD" },
   ];
 
   return (

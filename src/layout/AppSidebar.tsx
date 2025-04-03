@@ -1,5 +1,6 @@
 import { useCallback } from "react";
 import { Link, useLocation } from "react-router";
+import { useAuth } from "../context/useAuth";
 
 // Assume these icons are imported from an icon library
 import { GridIcon } from "../icons";
@@ -14,38 +15,39 @@ type NavItem = {
   subItems?: { name: string; path: string; pro?: boolean; new?: boolean }[];
 };
 
-const navItems: NavItem[] = [
-  {
-    icon: <KeySquare />,
-    name: "Admin",
-    path: "/admin",
-  },
-  {
-    icon: <GridIcon />,
-    name: "Dashboard",
-    path: "/home",
-  },
-
-  {
-    name: "Liste des factures",
-    path: "/facture",
-    icon: <FileText />,
-  },
-
-  {
-    name: "Parametres",
-    path: "/profile",
-    icon: <Settings />,
-  },
-];
-
 const AppSidebar: React.FC = () => {
+  const { user } = useAuth();
   const { isExpanded, isMobileOpen, isHovered, setIsHovered } = useSidebar();
   const location = useLocation();
 
   const isActive = useCallback(
     (path: string) => location.pathname === path,
     [location.pathname]
+  );
+
+  const navItems: NavItem[] = [
+    {
+      icon: <KeySquare />,
+      name: "Admin",
+      path: "/admin",
+    },
+    {
+      icon: <GridIcon />,
+      name: "Dashboard",
+      path: "/home",
+    },
+    {
+      name: "Liste des factures",
+      path: "/facture",
+      icon: <FileText />,
+    },
+    {
+      name: "Parametres",
+      path: "/profile",
+      icon: <Settings />,
+    },
+  ].filter(
+    (item) => !(item.name === "Admin" && (!user || user.role !== "admin"))
   );
 
   const renderMenuItems = (items: NavItem[]) => (

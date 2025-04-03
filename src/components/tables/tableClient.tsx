@@ -12,7 +12,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { ClientApi } from "../../api/ClientApi";
 import { IClient } from "../../../types/globalTypes";
 import { toast } from "sonner";
-import SkeletonLoader from "../Loading/SkekeletonLoader";
+import LoadingSpinner from "../Loading/LoadingSpinner";
 
 export function TableClient() {
   const queryClient = useQueryClient();
@@ -45,7 +45,7 @@ export function TableClient() {
     return (
       <div>
         {" "}
-        <SkeletonLoader rows={8} columns={10} />
+        <LoadingSpinner />
       </div>
     );
   if (isError) return <div>Erreur lors du chargement des clients</div>;

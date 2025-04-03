@@ -20,3 +20,13 @@ export interface IClient {
   photo: string;
   site: string;
 }
+
+export interface IAgent {
+  id: number;
+  name: string;
+  email: string;
+  role: string;
+  phone: string;
+  titre: string;
+  password?: string;
+}
