@@ -9,6 +9,8 @@ export interface IPayment {
   terrainNumber: string;
   clientNumber: string;
   email: string;
+  createdAt?: string;
+  agent?: string;
 }
 
 export interface IClient {

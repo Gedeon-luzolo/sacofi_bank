@@ -81,7 +81,7 @@ export function TableClient() {
               </TableCell>
               <TableCell
                 isHeader
-                className="px-5 py-3 text-start font-semibold text-white/90"
+                className="px-5 py-3 text-center font-semibold text-white/90"
               >
                 Site (Concession)
               </TableCell>
@@ -96,12 +96,6 @@ export function TableClient() {
                 className="px-5 py-3 text-start font-semibold text-white/90"
               >
                 Email
-              </TableCell>
-              <TableCell
-                isHeader
-                className="px-5 py-3 text-start font-semibold text-white/90"
-              >
-                Photo
               </TableCell>
               <TableCell
                 isHeader
@@ -130,7 +124,7 @@ export function TableClient() {
                   <TableCell className="px-4 py-3 text-start text-gray-600 dark:text-gray-400">
                     {client.phone}
                   </TableCell>
-                  <TableCell className="px-4 py-3 text-start text-gray-600 dark:text-gray-400">
+                  <TableCell className="px-4 py-3 text-center text-gray-600 dark:text-gray-400">
                     {client.site}
                   </TableCell>
                   <TableCell className="px-4 py-3 text-center text-gray-600 dark:text-gray-400">
@@ -139,16 +133,7 @@ export function TableClient() {
                   <TableCell className="px-4 py-3 text-start text-gray-600 dark:text-gray-400">
                     {client.email}
                   </TableCell>
-                  <TableCell className="px-4 py-3 text-start text-gray-600 dark:text-gray-400">
-                    <div className="w-10 h-10 overflow-hidden rounded-full border border-green-800">
-                      <img
-                        width={40}
-                        height={40}
-                        src={client.photo} // Assurez-vous que le chemin de la photo est correct
-                        alt={client.name}
-                      />
-                    </div>
-                  </TableCell>
+
                   <TableCell className="px-4 py-6 text-center flex justify-center gap-3">
                     <button className="text-yellow-600 hover:text-yellow-700 dark:text-yellow-400 dark:hover:text-yellow-300">
                       <Edit size={20} />

@@ -16,11 +16,11 @@ interface InputProps {
   success?: boolean;
   error?: boolean;
   hint?: string;
-  defaultValue?:string
+  defaultValue?: string;
+  required?: boolean;
 }
 
 const Input: FC<InputProps> = ({
-
   type = "text",
   id,
   name,
@@ -34,8 +34,9 @@ const Input: FC<InputProps> = ({
   disabled = false,
   success = false,
   error = false,
+  required = true,
   hint,
-  defaultValue
+  defaultValue,
 }) => {
   let inputClasses = ` h-11 w-full rounded-lg border appearance-none px-4 py-2.5 text-sm shadow-theme-xs placeholder:text-gray-400 focus:outline-hidden focus:ring-3 focus:border-green-500  dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 ${className}`;
 
@@ -64,7 +65,7 @@ const Input: FC<InputProps> = ({
         disabled={disabled}
         className={inputClasses}
         defaultValue={defaultValue}
-        required
+        required={required}
       />
 
       {hint && (

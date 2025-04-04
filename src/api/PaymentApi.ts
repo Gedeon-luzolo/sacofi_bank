@@ -1,4 +1,4 @@
-import { api } from "./AxiosService";
+import { api } from "./ServiceHost";
 
 export const PaymentApi = {
   // Récupérer tous les paiements
@@ -53,9 +53,9 @@ export const PaymentApi = {
   //   return response.data;
   // },
 
-  // // Supprimer un paiement
-  // deletePayment: async (id: number) => {
-  //   await api.delete(`/payments/${id}`);
-  //   return id;
-  // },
+  // Supprimer un paiement
+  deletePayment: async (id: number) => {
+    await api.delete(`/payment/${id}`);
+    return id;
+  },
 };

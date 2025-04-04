@@ -4,16 +4,28 @@ import Button from "../ui/button/Button";
 import Input from "../form/input/InputField";
 import Label from "../form/Label";
 import { useAuth } from "../../context/useAuth";
+import { useMutation } from "@tanstack/react-query";
+import { AgentApi } from "../../api/AgentApi";
+import { toast } from "sonner";
 
 export default function UserInfoCard() {
   const { isOpen, openModal, closeModal } = useModal();
   const { user } = useAuth();
-  console.log(user);
 
-  const handleSave = () => {
-    // Handle save logic here
-    console.log("Saving changes...");
-    closeModal();
+  const mutation = useMutation({
+    mutationFn: (formData: FormData) =>
+      AgentApi.updateAgent(user?.id as number, formData),
+    onSuccess: () => {
+      toast.success("Données mises à jour avec succès");
+      closeModal();
+    },
+    onError: () => {
+      toast.error("Erreur lors de la mise à jour des données ");
+    },
+  });
+
+  const handleSave = (formData: FormData) => {
+    mutation.mutate(formData);
   };
   return (
     <div className="p-5 border border-gray-200 rounded-2xl dark:border-gray-800 lg:p-6">
@@ -47,7 +59,7 @@ export default function UserInfoCard() {
                 Téléphone
               </p>
               <p className="text-sm font-medium text-gray-800 dark:text-white/90">
-                +243 85 875 78
+                {user?.phone}
               </p>
             </div>
 
@@ -92,33 +104,50 @@ export default function UserInfoCard() {
               Modifier vos Informations personnel
             </h4>
           </div>
-          <form className="flex flex-col">
+          <form className="flex flex-col" action={handleSave}>
             <div className="custom-scrollbar h-[370px] overflow-y-auto px-2 pb-3">
               <div className="mt-7">
                 <div className="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2">
                   <div className="col-span-2 lg:col-span-1">
                     <Label>Nom</Label>
-                    <Input type="text" value="Gedeon" />
-                  </div>
-
-                  <div className="col-span-2 lg:col-span-1">
-                    <Label>Prenom</Label>
-                    <Input type="text" value="Gedeon" />
+                    <Input type="text" defaultValue={user?.name} name="name" />
                   </div>
 
                   <div className="col-span-2 lg:col-span-1">
                     <Label>Email</Label>
-                    <Input type="text" value="admin@gmail.com" />
+                    <Input
+                      disabled={user?.role === "agent"}
+                      type="text"
+                      defaultValue={user?.email}
+                      name="email"
+                    />
                   </div>
 
                   <div className="col-span-2 lg:col-span-1">
                     <Label>Téléphone</Label>
-                    <Input type="text" value="+243 85 875 78" />
+                    <Input
+                      type="text"
+                      defaultValue={user?.phone}
+                      name="phone"
+                    />
                   </div>
 
-                  <div className="col-span-2">
+                  <div className="col-span-2 lg:col-span-1">
                     <Label>Titre</Label>
-                    <Input type="text" value="Ingenieur Data" />
+                    <Input
+                      disabled={user?.role === "agent"}
+                      type="text"
+                      defaultValue={user?.titre}
+                      name="titre"
+                    />
+                  </div>
+                  <div className="col-span-2 mr-5">
+                    <Label>Mot de passe</Label>
+                    <Input
+                      type="text"
+                      placeholder="XXXXXXXXXXXX"
+                      name="password"
+                    />
                   </div>
                 </div>
               </div>
@@ -127,9 +156,7 @@ export default function UserInfoCard() {
               <Button size="sm" variant="outline" onClick={closeModal}>
                 Fermer
               </Button>
-              <Button size="sm" onClick={handleSave}>
-                Enregistrer le changement
-              </Button>
+              <Button size="sm">Enregistrer le changement</Button>
             </div>
           </form>
         </div>

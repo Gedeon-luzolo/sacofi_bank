@@ -1,10 +1,10 @@
 import { motion } from "framer-motion";
 import ComponentCard from "../common/ComponentCard";
 import Input from "../form/input/InputField";
-import { Search, LucidePrinter } from "lucide-react";
+import { Search, LucidePrinter, Trash2 } from "lucide-react";
 import Button from "../ui/button/Button";
 import { useNavigate } from "react-router";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { PaymentApi } from "../../api/PaymentApi";
 import { IPayment } from "../../../types/globalTypes";
 import {
@@ -18,11 +18,17 @@ import { useState } from "react";
 import { Modal } from "../ui/modal";
 import { FactureModal } from "./FactureModal";
 import LoadingSpinner from "../Loading/LoadingSpinner";
+import { toast } from "sonner";
+import { useAuth } from "../../context/useAuth";
+import { useSidebar } from "../../context/SidebarContext";
 
 export function FactureComponents() {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedInvoice, setSelectedInvoice] = useState<IPayment | null>(null);
+  const queryClient = useQueryClient();
+  const { user } = useAuth();
+  const { isExpanded } = useSidebar();
 
   const { data, isError, isLoading } = useQuery({
     queryKey: ["payment"],
@@ -37,6 +43,21 @@ export function FactureComponents() {
   const closeModal = () => {
     setIsModalOpen(false);
     setSelectedInvoice(null);
+  };
+
+  const deleteMutation = useMutation({
+    mutationFn: (id: number) => PaymentApi.deletePayment(id),
+    onSuccess: () => {
+      toast.success("Facture supprimé avec succès");
+      queryClient.invalidateQueries({ queryKey: ["payment"] });
+    },
+    onError: () => {
+      toast.error("Erreur lors de la suppression de la facture");
+    },
+  });
+
+  const handleDelete = (id: number) => {
+    deleteMutation.mutate(id);
   };
 
   if (isError) {
@@ -124,11 +145,21 @@ export function FactureComponents() {
                 >
                   Telephone
                 </TableCell>
+
+                {!isExpanded && (
+                  <TableCell
+                    isHeader
+                    className="px-3 py-2 text-sm text-center font-semibold text-white/90"
+                  >
+                    Email client
+                  </TableCell>
+                )}
+
                 <TableCell
                   isHeader
                   className="px-3 py-2 text-sm text-center font-semibold text-white/90"
                 >
-                  Email client
+                  Emit par
                 </TableCell>
                 <TableCell
                   isHeader
@@ -149,10 +180,8 @@ export function FactureComponents() {
                     <TableCell className="text-sm px-4 py-3 text-start text-gray-600 dark:text-gray-400">
                       {invoice.id}
                     </TableCell>
-                    <TableCell className="px-3 py-4 text-start">
-                      <span className="block text-sm font-semibold text-gray-900 dark:text-white/90">
-                        {invoice.clientName}
-                      </span>
+                    <TableCell className="px-3 text-sm py-3 text-start text-gray-600 dark:text-gray-400">
+                      {invoice.clientName}
                     </TableCell>
                     <TableCell className="px-3 text-sm py-3 text-start text-gray-600 dark:text-gray-400">
                       {invoice.paymentReason}
@@ -173,17 +202,35 @@ export function FactureComponents() {
                     <TableCell className="px-4 py-3 text-sm text-start text-gray-600 dark:text-gray-400">
                       {invoice.clientNumber}
                     </TableCell>
+
+                    {!isExpanded && (
+                      <TableCell className="px-4 py-3 text-sm text-start text-gray-600 dark:text-gray-400">
+                        {invoice.email}
+                      </TableCell>
+                    )}
+
                     <TableCell className="px-4 py-3 text-sm text-start text-gray-600 dark:text-gray-400">
-                      {invoice.email}
+                      {invoice.agent}
                     </TableCell>
 
-                    <TableCell className="px-4 py-3 text-sm text-center  gap-3">
-                      <button
-                        className="p-2 rounded hover:bg-green-600"
-                        onClick={() => openModal(invoice)}
-                      >
-                        <LucidePrinter className="size-5 dark:text-gray-200" />
-                      </button>
+                    <TableCell className="px-4 py-3 text-sm text-center gap-3">
+                      <div className="flex items-center">
+                        <button
+                          className="p-2 rounded hover:bg-green-600"
+                          onClick={() => openModal(invoice)}
+                        >
+                          <LucidePrinter className="size-5 text-blue-700 hover:dark:text-zinc-50 dark:text-blue-400 hover:text-gray-25" />
+                        </button>
+
+                        {user?.role === "admin" && (
+                          <button
+                            onClick={() => handleDelete(invoice.id)}
+                            className="text-red-600 rounded hover:bg-red-500 hover:text-zinc-50 p-2 dark:text-red-400 dark:hover:text-zinc-50"
+                          >
+                            <Trash2 size={20} />
+                          </button>
+                        )}
+                      </div>
                     </TableCell>
                   </TableRow>
                 ))

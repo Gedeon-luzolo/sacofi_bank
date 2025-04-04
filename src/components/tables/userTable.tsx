@@ -201,27 +201,31 @@ export function UserTable() {
                 <div className="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2">
                   <div className="col-span-2 lg:col-span-1">
                     <Label>Nom</Label>
-                    <Input type="text" value="Gedeon" />
-                  </div>
-
-                  <div className="col-span-2 lg:col-span-1">
-                    <Label>Prenom</Label>
-                    <Input type="text" value="Gedeon" />
+                    <Input type="text" placeholder="Gedeon" name="name" />
                   </div>
 
                   <div className="col-span-2 lg:col-span-1">
                     <Label>Email</Label>
-                    <Input type="text" value="admin@gmail.com" />
+                    <Input
+                      type="text"
+                      placeholder="admin@gmail.com"
+                      name="email"
+                    />
+                  </div>
+
+                  <div className="col-span-2 lg:col-span-1">
+                    <Label>Role</Label>
+                    <Input type="text" placeholder="Agents" name="role" />
                   </div>
 
                   <div className="col-span-2 lg:col-span-1">
                     <Label>Téléphone</Label>
-                    <Input type="text" value="+243 85 875 78" />
+                    <Input type="text" value="+243 85 875 78" name="phone" />
                   </div>
 
                   <div className="col-span-2">
-                    <Label>Titre</Label>
-                    <Input type="text" value="Ingenieur Data" />
+                    <Label>Poste</Label>
+                    <Input type="text" value="Ingenieur Data" name="titre" />
                   </div>
                 </div>
               </div>

@@ -6,11 +6,12 @@ import Select from "../form/Select";
 import { toast } from "sonner";
 import { useNavigate } from "react-router";
 import { EnvelopeIcon } from "../../icons";
-import FileInput from "../form/input/FileInput";
 import { useMutation } from "@tanstack/react-query";
 import { ClientApi } from "../../api/ClientApi";
+import { useAuth } from "../../context/useAuth";
 
 export function AddClientForm() {
+  const { user } = useAuth();
   const navigate = useNavigate();
   const concession = [
     { value: "MALUKU", label: "MALUKU" },
@@ -31,7 +32,6 @@ export function AddClientForm() {
   });
 
   const handleSubmit = (formData: FormData) => {
-    // console.log("Données envoyées :", Object.fromEntries(formData.entries()));
     mutation.mutate(formData);
   };
 
@@ -49,7 +49,7 @@ export function AddClientForm() {
         <div className="mt-6">
           <form
             className="grid grid-cols-1 gap-6 lg:grid-cols-2"
-            action={handleSubmit} // Utilisation de onSubmit
+            action={handleSubmit}
           >
             <div>
               <Label>Nom complet du Client</Label>
@@ -83,7 +83,8 @@ export function AddClientForm() {
                 <Input
                   placeholder="info@gmail.com"
                   type="email"
-                  name="email" // Ajout du nom pour le formulaire
+                  name="email"
+                  required={false}
                   className="pl-[62px]"
                 />
                 <span className="absolute left-0 top-1/2 -translate-y-1/2 border-r border-gray-200 px-3.5 py-3 text-gray-500 dark:border-gray-800 dark:text-gray-400">
@@ -96,10 +97,11 @@ export function AddClientForm() {
               <Input type="text" name="numTerrain" placeholder="TRM-02" />
             </div>
 
-            <div>
-              <Label>Photo du client</Label>
-              <FileInput className="custom-class" name="photo" />
+            <div className="hidden">
+              <Label>Créer par</Label>
+              <Input type="text" name="agent" value={user?.name} />
             </div>
+
             <div className="flex gap-3 mt-6 justify-end lg:justify-start">
               <button
                 type="button"

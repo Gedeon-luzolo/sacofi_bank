@@ -31,7 +31,7 @@ export function ButtonDisplay() {
   return (
     <button
       onClick={toggleFullScreen}
-      className="text-gray-500 px-2 py-2 rounded-full transition border dark:text-gray-400 hover:text-green-700/40 dark:hover:text-gray-200"
+      className="relative flex items-center justify-center text-gray-500 transition-colors bg-white border border-gray-200 rounded-full dropdown-toggle hover:text-gray-700 h-11 w-11 hover:bg-gray-100 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white"
     >
       {isFullScreen ? <Minimize size={24} /> : <Maximize size={24} />}
     </button>

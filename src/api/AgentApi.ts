@@ -1,4 +1,4 @@
-import { api } from "./AxiosService";
+import { api } from "./ServiceHost";
 
 export const AgentApi = {
   // Récupérer tous les agents
@@ -6,13 +6,6 @@ export const AgentApi = {
     const response = await api.get("/agent");
     return response.data;
   },
-
-  // Créer un agent
-  postAgent: async (agentData: FormData) => {
-    const response = await api.post("/agent", agentData);
-    return response.data;
-  },
-
   // Récupérer un agent par ID
   getAgentById: async (id: number) => {
     const response = await api.get(`/agent/${id}`);

@@ -6,6 +6,14 @@ interface FactureModalProps {
 }
 
 export function FactureModal({ selectedInvoice }: FactureModalProps) {
+  const createdAtDate = new Date(selectedInvoice.createdAt || Date.now()); // Conversion en objet Date
+
+  const formattedDate = createdAtDate.toLocaleDateString("fr-FR", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  });
+
   return (
     <div className="no-scrollbar relative w-full max-w-[700px] overflow-hidden rounded-3xl bg-white p-4">
       <div className="custom-scrollbar max-h-[80vh] overflow-y-auto px-4 pb-4">
@@ -28,7 +36,7 @@ export function FactureModal({ selectedInvoice }: FactureModalProps) {
           <div className="text-right">
             <p className="text-sm">
               <span className="font-semibold">Date de facturation:</span>{" "}
-              24/2/2024
+              {formattedDate}
             </p>
             <p className="text-sm">
               <span className="font-semibold">Mode de paiement:</span>{" "}
@@ -78,10 +86,12 @@ export function FactureModal({ selectedInvoice }: FactureModalProps) {
                 </td>
                 <td className="py-3 text-center">1</td>
                 <td className="py-3 text-right">
-                  {selectedInvoice.amount} {selectedInvoice.currency}
+                  {selectedInvoice.amount.toLocaleString("en-US")}{" "}
+                  {selectedInvoice.currency}
                 </td>
                 <td className="py-3 text-right">
-                  {selectedInvoice.amount} {selectedInvoice.currency}
+                  {selectedInvoice.amount.toLocaleString("en-US")}{" "}
+                  {selectedInvoice.currency}
                 </td>
               </motion.tr>
             </tbody>
@@ -93,20 +103,15 @@ export function FactureModal({ selectedInvoice }: FactureModalProps) {
             <div className="flex justify-between py-1">
               <span className="font-semibold">Total:</span>
               <span>
-                {selectedInvoice.amount} {selectedInvoice.currency}
-              </span>
-            </div>
-            <div className="flex justify-between py-1">
-              <span className="font-semibold">TVA 16%</span>
-              <span>
-                {(selectedInvoice.amount * 0.16).toFixed(2)}{" "}
+                {selectedInvoice.amount.toLocaleString("en-US")}{" "}
                 {selectedInvoice.currency}
               </span>
             </div>
+
             <div className="flex justify-between py-2 border-t border-gray-300 font-bold">
               <span>Total TTC:</span>
               <span>
-                {(selectedInvoice.amount * 1.16).toFixed(2)}{" "}
+                {selectedInvoice.amount.toLocaleString("en-US")}{" "}
                 {selectedInvoice.currency}
               </span>
             </div>
@@ -115,8 +120,8 @@ export function FactureModal({ selectedInvoice }: FactureModalProps) {
 
         <div className="grid grid-cols-2 gap-4 text-sm border-t border-gray-300 pt-4">
           <div>
-            <p className="font-bold">{selectedInvoice.clientName}</p>
-            <p>No de TVA: 16%</p>
+            <p>facture émet par</p>
+            <p className="font-bold text-lg">{selectedInvoice.agent}</p>
           </div>
           <div className="text-right">
             <p>Sacofi</p>

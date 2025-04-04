@@ -7,9 +7,11 @@ import { toast } from "sonner";
 import { useNavigate } from "react-router";
 import { useMutation } from "@tanstack/react-query";
 import { PaymentApi } from "../../api/PaymentApi"; // Assurez-vous que le chemin est correct
+import { useAuth } from "../../context/useAuth.tsx";
 
 export function PaymentComponent() {
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   const mutation = useMutation({
     mutationFn: (paymentData: FormData) => PaymentApi.addPayment(paymentData),
@@ -165,7 +167,22 @@ export function PaymentComponent() {
             transition={{ delay: 0.8 }}
           >
             <Label>E-mail du client</Label>
-            <Input name="email" type="email" placeholder="client@sacofi.com" />
+            <Input
+              name="email"
+              type="email"
+              placeholder="client@sacofi.com"
+              required={false}
+            />
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.8 }}
+            className="hidden"
+          >
+            <Label>Emi</Label>
+            <Input name="agent" type="text" value={user?.name} />
           </motion.div>
 
           <div className="flex gap-3 mt-6 justify-end lg:justify-start">

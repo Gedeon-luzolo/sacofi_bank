@@ -1,4 +1,4 @@
-import { api } from "./AxiosService";
+import { api } from "./ServiceHost";
 
 export const ClientApi = {
   // Récupérer tous les paiements
@@ -8,8 +8,8 @@ export const ClientApi = {
   },
 
   // Créer un paiement
-  postClient: async (paymentData: FormData) => {
-    const response = await api.post("/client", paymentData);
+  postClient: async (clientData: FormData) => {
+    const response = await api.post("/client", clientData);
     return response.data;
   },
 
@@ -20,8 +20,8 @@ export const ClientApi = {
   },
 
   // Mettre à jour un paiement
-  updateClient: async (id: number, paymentData: FormData) => {
-    const response = await api.put(`/client/${id}`, paymentData);
+  updateClient: async (id: number, clientData: FormData) => {
+    const response = await api.put(`/client/${id}`, clientData);
     return response.data;
   },
 

@@ -1,4 +1,4 @@
-import { api } from "./AxiosService";
+import { api } from "./ServiceHost";
 
 export const AuthApi = {
   // Inscription d'un nouvel utilisateur
